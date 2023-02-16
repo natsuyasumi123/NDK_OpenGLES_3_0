@@ -7,12 +7,13 @@
  * */
 
 #include <gtc/matrix_transform.hpp>
+#include <freetype/ftstroke.h>
 #include "TextRenderSample.h"
 #include "../util/GLUtils.h"
 static const wchar_t BYTE_FLOW[] = L"中国智造，惠及全球";
 static const int MAX_SHORT_VALUE = 65536;
 void leanFont( FT_Face& face ,  FT_Fixed leanValue ) ;
-
+void outlineFont(FT_Library& ft , FT_Face& face , char glyphId ) ;
 TextRenderSample::TextRenderSample()
 {
 
@@ -233,15 +234,35 @@ void TextRenderSample::LoadFacesByASCII() {
 		LOGCATE("TextRenderSample::LoadFacesByASCII FREETYPE: Failed to load font");
 
 	// Set size to load glyphs as
-	FT_Set_Pixel_Sizes(face, 0, 96);
+	FT_Set_Pixel_Sizes(face, 0, 1024);
 
-	leanFont(face  ,1) ;
+//	leanFont(face  ,1) ;
+
+
+
+
 	// Disable byte-alignment restriction
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 	// Load first 128 characters of ASCII set
 	for (unsigned char c = 0; c < 128; c++)
 	{
+		unsigned char glyphId = c ;
+		FT_Stroker stroker;
+		FT_Stroker_New(ft, &stroker);
+//  2 * 64 result in 2px outline
+		FT_Stroker_Set(stroker, 16 * 64, FT_STROKER_LINECAP_ROUND, FT_STROKER_LINEJOIN_ROUND, 0);
+//    ...
+// generation of an outline for single glyph:
+		FT_UInt glyphIndex = FT_Get_Char_Index(face, glyphId);
+		FT_Load_Glyph(face, glyphIndex, FT_LOAD_DEFAULT);
+		FT_Glyph glyph;
+		FT_Get_Glyph(face->glyph, &glyph);
+		FT_Glyph_StrokeBorder(&glyph, stroker, false, true);
+		FT_Glyph_To_Bitmap(&glyph, FT_RENDER_MODE_NORMAL, nullptr, true);
+		FT_BitmapGlyph bitmapGlyph = reinterpret_cast<FT_BitmapGlyph>(glyph);
+
+
 		// Load character glyph
 		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
 		{
@@ -256,12 +277,15 @@ void TextRenderSample::LoadFacesByASCII() {
 				GL_TEXTURE_2D,
 				0,
 				GL_LUMINANCE,
-				face->glyph->bitmap.width,
-				face->glyph->bitmap.rows,
+				bitmapGlyph->bitmap.width ,
+				bitmapGlyph->bitmap.rows ,
+//				face->glyph->bitmap.width,
+//				face->glyph->bitmap.rows,
 				0,
 				GL_LUMINANCE,
 				GL_UNSIGNED_BYTE,
-				face->glyph->bitmap.buffer
+				bitmapGlyph->bitmap.buffer
+//				face->glyph->bitmap.buffer
 		);
 //		NativeImage image;
 //		image.width = face->glyph->bitmap.width;
@@ -275,6 +299,7 @@ void TextRenderSample::LoadFacesByASCII() {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//		outlineFont(ft , face ,c ) ;
 		// Now store character for later use
 		Character character = {
 				texture,
@@ -431,6 +456,24 @@ void leanFont( FT_Face& face ,  FT_Fixed leanValue ){
 	matrix.yy = 0x10000L;
 	FT_Set_Transform( face, &matrix, nullptr );
 }
+
+void outlineFont(FT_Library& ft , FT_Face& face , char glyphId ){
+
+    FT_Stroker stroker;
+    FT_Stroker_New(ft, &stroker);
+//  2 * 64 result in 2px outline
+    FT_Stroker_Set(stroker, 2 * 64, FT_STROKER_LINECAP_ROUND, FT_STROKER_LINEJOIN_ROUND, 0);
+//    ...
+// generation of an outline for single glyph:
+    FT_UInt glyphIndex = FT_Get_Char_Index(face, glyphId);
+    FT_Load_Glyph(face, glyphIndex, FT_LOAD_DEFAULT);
+    FT_Glyph glyph;
+    FT_Get_Glyph(face->glyph, &glyph);
+    FT_Glyph_StrokeBorder(&glyph, stroker, false, true);
+    FT_Glyph_To_Bitmap(&glyph, FT_RENDER_MODE_NORMAL, nullptr, true);
+    FT_BitmapGlyph bitmapGlyph = reinterpret_cast<FT_BitmapGlyph>(glyph);
+}
+
 
 void TextRenderSample::RenderText(const wchar_t *text, int textLen, GLfloat x, GLfloat y, GLfloat scale,
 								  glm::vec3 color, glm::vec2 viewport) {
