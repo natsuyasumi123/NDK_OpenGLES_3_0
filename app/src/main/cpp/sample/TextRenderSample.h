@@ -54,6 +54,9 @@ private:
 	void LoadFacesByASCII();
 	void LoadFacesByUnicode(const wchar_t* text, int size);
 
+
+
+
 	GLuint m_TextureId;
 	GLint m_SamplerLoc;
 	GLint m_MVPMatLoc;

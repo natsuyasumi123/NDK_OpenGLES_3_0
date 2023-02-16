@@ -9,8 +9,9 @@
 #include <gtc/matrix_transform.hpp>
 #include "TextRenderSample.h"
 #include "../util/GLUtils.h"
-static const wchar_t BYTE_FLOW[] = L"微信公众号字节流动，欢迎关注交流学习。";
+static const wchar_t BYTE_FLOW[] = L"中国智造，惠及全球";
 static const int MAX_SHORT_VALUE = 65536;
+void leanFont( FT_Face& face ,  FT_Fixed leanValue ) ;
 
 TextRenderSample::TextRenderSample()
 {
@@ -141,8 +142,8 @@ void TextRenderSample::Draw(int screenW, int screenH)
 	glUniformMatrix4fv(m_MVPMatLoc, 1, GL_FALSE, &m_MVPMatrix[0][0]);
 
 	// (x,y)为屏幕坐标系的位置，即原点位于屏幕中心，x(-1.0,1.0), y(-1.0,1.0)
-	RenderText("My WeChat ID is Byte-Flow.", -0.9f, 0.2f, 1.0f, glm::vec3(0.8, 0.1f, 0.1f), viewport);
-	RenderText("Welcome to add my WeChat.", -0.9f, 0.0f, 2.0f, glm::vec3(0.2, 0.4f, 0.7f), viewport);
+	RenderText("RenderText 1 .", -0.9f, 0.2f, 1.0f, glm::vec3(0.8, 0.1f, 0.1f), viewport);
+	RenderText("Another Text ", -0.9f, 0.0f, 2.0f, glm::vec3(0.2, 0.4f, 0.7f), viewport);
 
 	RenderText(BYTE_FLOW, sizeof(BYTE_FLOW)/sizeof(BYTE_FLOW[0]) - 1, -0.9f, -0.2f, 1.0f, glm::vec3(0.7, 0.4f, 0.2f), viewport);
 
@@ -234,6 +235,7 @@ void TextRenderSample::LoadFacesByASCII() {
 	// Set size to load glyphs as
 	FT_Set_Pixel_Sizes(face, 0, 96);
 
+	leanFont(face  ,1) ;
 	// Disable byte-alignment restriction
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -418,6 +420,16 @@ void TextRenderSample::UpdateMVPMatrix(glm::mat4 &mvpMatrix, int angleX, int ang
 
 	mvpMatrix = Projection * View * Model;
 
+}
+
+
+void leanFont( FT_Face& face ,  FT_Fixed leanValue ){
+	FT_Matrix matrix;
+	matrix.xx = 0x10000L;
+	matrix.xy = leanValue * 0x10000L / 2;
+	matrix.yx = 0;
+	matrix.yy = 0x10000L;
+	FT_Set_Transform( face, &matrix, nullptr );
 }
 
 void TextRenderSample::RenderText(const wchar_t *text, int textLen, GLfloat x, GLfloat y, GLfloat scale,
