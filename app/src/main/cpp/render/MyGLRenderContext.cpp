@@ -60,9 +60,9 @@ MyGLRenderContext* MyGLRenderContext::m_pContext = nullptr;
 
 MyGLRenderContext::MyGLRenderContext()
 {
-	m_pCurSample = new BeatingHeartSample();
+//	m_pCurSample = new BeatingHeartSample();
+	m_pCurSample = new TextRenderSample();
 	m_pBeforeSample = nullptr;
-
 }
 
 MyGLRenderContext::~MyGLRenderContext()
@@ -92,6 +92,10 @@ void MyGLRenderContext::SetParamsInt(int paramType, int value0, int value1)
 
 		LOGCATE("MyGLRenderContext::SetParamsInt 0 m_pBeforeSample = %p", m_pBeforeSample);
 
+		if(1){
+			m_pCurSample = new TextRenderSample() ;
+			return ;
+		}
 		switch (value0)
 		{
 			case SAMPLE_TYPE_KEY_TRIANGLE:
