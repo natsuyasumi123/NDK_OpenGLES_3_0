@@ -234,7 +234,7 @@ void TextRenderSample::LoadFacesByASCII() {
 		LOGCATE("TextRenderSample::LoadFacesByASCII FREETYPE: Failed to load font");
 
 	// Set size to load glyphs as
-	FT_Set_Pixel_Sizes(face, 0, 1024);
+	FT_Set_Pixel_Sizes(face, 0, 128);
 
 //	leanFont(face  ,1) ;
 
@@ -247,21 +247,29 @@ void TextRenderSample::LoadFacesByASCII() {
 	// Load first 128 characters of ASCII set
 	for (unsigned char c = 0; c < 128; c++)
 	{
+		/**
+		 * outline begin
+		 */
 		unsigned char glyphId = c ;
 		FT_Stroker stroker;
 		FT_Stroker_New(ft, &stroker);
 //  2 * 64 result in 2px outline
-		FT_Stroker_Set(stroker, 16 * 64, FT_STROKER_LINECAP_ROUND, FT_STROKER_LINEJOIN_ROUND, 0);
+		FT_Stroker_Set(stroker, 2 * 64, FT_STROKER_LINECAP_ROUND, FT_STROKER_LINEJOIN_ROUND, 0);
 //    ...
 // generation of an outline for single glyph:
 		FT_UInt glyphIndex = FT_Get_Char_Index(face, glyphId);
 		FT_Load_Glyph(face, glyphIndex, FT_LOAD_DEFAULT);
 		FT_Glyph glyph;
 		FT_Get_Glyph(face->glyph, &glyph);
-		FT_Glyph_StrokeBorder(&glyph, stroker, false, true);
+		FT_Glyph_Stroke(&glyph , stroker , true ) ;
+//		FT_Glyph_StrokeBorder(&glyph, stroker, false, true);
 		FT_Glyph_To_Bitmap(&glyph, FT_RENDER_MODE_NORMAL, nullptr, true);
 		FT_BitmapGlyph bitmapGlyph = reinterpret_cast<FT_BitmapGlyph>(glyph);
-
+//		FT_Stroker_EndSubPath(stroker) ;
+		FT_Stroker_Done(stroker) ;
+		/**
+		 * outline end
+		 */
 
 		// Load character glyph
 		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
@@ -311,6 +319,7 @@ void TextRenderSample::LoadFacesByASCII() {
 	}
 	glBindTexture(GL_TEXTURE_2D, 0);
 	// Destroy FreeType once we're finished
+
 	FT_Done_Face(face);
 	FT_Done_FreeType(ft);
 
