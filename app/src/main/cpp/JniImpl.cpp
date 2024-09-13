@@ -6,6 +6,7 @@
 #include <EGLRender.h>
 #include "jni.h"
 
+#include<vector>
 #define NATIVE_RENDER_CLASS_NAME "com/byteflow/app/MyNativeRender"
 #define NATIVE_BG_RENDER_CLASS_NAME "com/byteflow/app/egl/NativeEglRender"
 
@@ -15,7 +16,7 @@ extern "C" {
 /*
  * Class:     com_byteflow_app_MyNativeRender
  * Method:    native_Init
- * Signature: ()V
+ * Signature: ()
  */
 JNIEXPORT void JNICALL native_Init(JNIEnv *env, jobject instance)
 {

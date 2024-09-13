@@ -60,7 +60,7 @@ MyGLRenderContext* MyGLRenderContext::m_pContext = nullptr;
 
 MyGLRenderContext::MyGLRenderContext()
 {
-	m_pCurSample = new BeatingHeartSample();
+	m_pCurSample = new BigHeadSample();
 	m_pBeforeSample = nullptr;
 }
 

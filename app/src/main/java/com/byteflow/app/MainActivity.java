@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -163,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements AudioCollector.Ca
 
     private MyGLSurfaceView mGLSurfaceView;
     private ViewGroup mRootView;
-    private int mSampleSelectedIndex = SAMPLE_TYPE_KEY_BEATING_HEART - SAMPLE_TYPE;
+    private int mSampleSelectedIndex = SAMPLE_TYPE_KEY_BIG_HEAD - SAMPLE_TYPE;
     private AudioCollector mAudioCollector;
     private MyGLRender mGLRender = new MyGLRender();
     private SensorManager mSensorManager;
@@ -176,6 +177,7 @@ public class MainActivity extends AppCompatActivity implements AudioCollector.Ca
         mRootView.getViewTreeObserver().addOnGlobalLayoutListener(this);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mGLRender.init();
+
 
     }
 
@@ -379,22 +381,17 @@ public class MainActivity extends AppCompatActivity implements AudioCollector.Ca
                         loadRGBAImage(R.drawable.front,5);
                         break;
                     case SAMPLE_TYPE_PBO:
-                        loadRGBAImage(R.drawable.front);
-                        mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
-                        break;
-                    case SAMPLE_TYPE_KEY_BEATING_HEART:
-                        mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
-                        break;
-                    case SAMPLE_TYPE_KEY_CLOUD:
-                        loadRGBAImage(R.drawable.noise);
-                        mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
-                        break;
                     case SAMPLE_TYPE_KEY_TIME_TUNNEL:
                         loadRGBAImage(R.drawable.front);
                         mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
                         break;
+                    case SAMPLE_TYPE_KEY_BEATING_HEART:
                     case SAMPLE_TYPE_KEY_BEZIER_CURVE:
                         //loadRGBAImage(R.drawable.board_texture);
+                        mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
+                        break;
+                    case SAMPLE_TYPE_KEY_CLOUD:
+                        loadRGBAImage(R.drawable.noise);
                         mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
                         break;
                     case SAMPLE_TYPE_KEY_BIG_EYES:

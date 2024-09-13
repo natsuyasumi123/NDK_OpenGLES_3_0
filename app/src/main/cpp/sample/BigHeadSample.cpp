@@ -177,7 +177,7 @@ void BigHeadSample::Draw(int screenW, int screenH)
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_VboIds[0]);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(m_Vertices), m_Vertices);
-
+	//glBufferData(GL_ARRAY_BUFFER,sizeof (m_Vertices) ,m_Vertices , GL_DYNAMIC_DRAW);
 	glUseProgram (m_ProgramObj);
 
 	glBindVertexArray(m_VaoId);
