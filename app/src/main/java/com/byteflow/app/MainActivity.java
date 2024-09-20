@@ -396,7 +396,7 @@ public class MainActivity extends AppCompatActivity implements AudioCollector.Ca
                         break;
                     case SAMPLE_TYPE_KEY_BIG_EYES:
                     case SAMPLE_TYPE_KEY_FACE_SLENDER:
-                        Bitmap bitmap = loadRGBAImage(R.drawable.yifei);
+                        Bitmap bitmap = loadRGBAImage(R.drawable.test);
                         mGLSurfaceView.setAspectRatio(bitmap.getWidth(), bitmap.getHeight());
                         mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
                         break;
@@ -414,7 +414,7 @@ public class MainActivity extends AppCompatActivity implements AudioCollector.Ca
                         }
                         mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
                     case SAMPLE_TYPE_KEY_SCRATCH_CARD:
-                        Bitmap b1 = loadRGBAImage(R.drawable.yifei);
+                        Bitmap b1 = loadRGBAImage(R.drawable.test);
                         mGLSurfaceView.setAspectRatio(b1.getWidth(), b1.getHeight());
                         //mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
                         break;

@@ -53,6 +53,7 @@
 #include <CopyTextureExample.h>
 #include <BlitFrameBufferExample.h>
 #include <BinaryProgramExample.h>
+#include <koshiSlenderSample.h>
 #include "MyGLRenderContext.h"
 #include "LogUtil.h"
 
@@ -162,7 +163,8 @@ void MyGLRenderContext::SetParamsInt(int paramType, int value0, int value1)
                 m_pCurSample = new BigEyesSample();
                 break;
 			case SAMPLE_TYPE_KEY_FACE_SLENDER:
-				m_pCurSample = new FaceSlenderSample();
+				m_pCurSample = new koshiSlenderSample();
+//				m_pCurSample = new FaceSlenderSample();
 				break;
 			case SAMPLE_TYPE_KEY_BIG_HEAD:
 				m_pCurSample = new BigHeadSample();
