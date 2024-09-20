@@ -13,7 +13,7 @@
 
 
 
-float face_data [75] = {
+float karada_data [75] = {
 		328.507,188.281,0.892449,303.478,376.13,0.711954,
 		165.762,388.688,0.567716,65.6257,428.757,0.744823,
 		128.08,253.397,0.780997,448.659,361.136,0.691428,
@@ -36,11 +36,13 @@ float face_data [75] = {
 int leftShadowPoint = 2 ,rightShadowPoint = 5 , centerBottom = 8 ;
 int pointSize = 3 ;
 float koshiPosition = 0.7f ;
- float LeftCheekKeyPoint11[] = {face_data[leftShadowPoint * pointSize ], face_data[leftShadowPoint *pointSize + 1 ]};//左肩膀
-float ChinKeyPoint11[] = {face_data[centerBottom *pointSize ], face_data[centerBottom * pointSize + 1 ] };//下巴关键点
-float RightCheekPoint11[] = {face_data[15], face_data[16]};//右脸颊关键点
-float LeftSlenderCtlPoint11[] = {face_data[27 ] * koshiPosition + face_data[6] *(1.0f - koshiPosition) - 20, face_data[28] *koshiPosition + face_data[7] * (1.0f - koshiPosition)};//左侧控制点
-float RightSlenderCtlPoint11[] = {face_data[36]  * koshiPosition + face_data[15 ] * (1.0f - koshiPosition) + 20 , face_data[37]  * koshiPosition + face_data[16 ] * (1.0f - koshiPosition)};//右侧控制点
+float LeftCheekKeyPoint11[] = {karada_data[leftShadowPoint * pointSize ], karada_data[leftShadowPoint *pointSize + 1 ]};//左肩膀
+float ChinKeyPoint11[] = {karada_data[centerBottom *pointSize ], karada_data[centerBottom * pointSize + 1 ] };//下巴关键点
+float RightCheekPoint11[] = {karada_data[15], karada_data[16]};//右脸颊关键点
+float LeftSlenderCtlPoint11[] = {karada_data[27 ] * koshiPosition + karada_data[6] *(1.0f - koshiPosition) - 20,
+								 karada_data[28] *koshiPosition + karada_data[7] * (1.0f - koshiPosition)};//左侧控制点
+float RightSlenderCtlPoint11[] = {karada_data[36]  * koshiPosition + karada_data[15 ] * (1.0f - koshiPosition) + 20 ,
+								  karada_data[37]  * koshiPosition + karada_data[16 ] * (1.0f - koshiPosition)};//右侧控制点
 
 koshiSlenderSample::koshiSlenderSample()
 {

@@ -7,15 +7,39 @@
  * */
 
 #include <gtc/matrix_transform.hpp>
-#include "BigEyesSample.h"
+#include "BigBreast.h"
 #include "../util/GLUtils.h"
 
 
-float LeftEyePoint[] = {283, 361};
-float RightEyePoint[] = {395, 360};
-float EyeRadius = 36;
 
-BigEyesSample::BigEyesSample()
+float karada_data22 [75] = {
+		328.507,188.281,0.892449,303.478,376.13,0.711954,
+		165.762,388.688,0.567716,65.6257,428.757,0.744823,
+		128.08,253.397,0.780997,448.659,361.136,0.691428,
+		488.866,626.521,0.451658,506.282,814.359,0.671578,
+		280.946,856.934,0.252068,185.818,851.959,0.233529,
+		0,0,0,0,0,0,
+		388.611,864.402,0.22777,0,0,0,
+		0,0,0,283.516,155.762,0.862234,
+		333.648,150.707,0.918626,205.877,203.338,0.840428,
+		0,0,0,0,0,0,
+		0,0,0,0,0,0,
+		0,0,0,0,0,0,
+		0,0,0
+};
+//左右眼的坐标和半径
+//float LeftEyePoint[] = {283, 361};
+//float RightEyePoint[] = {395, 360};
+//float EyeRadius = 36;
+
+
+
+float brestLeftPoint[] = {karada_data22[6]/2 + karada_data22[3] /2, karada_data22[7] * 0.667f + karada_data22[28] *0.333f};
+float rightBreastPoint[] = {karada_data22[15]/2 + karada_data22[3] /2, karada_data22[16] * 0.667f + karada_data22[37] *0.333f};
+
+int breastSize = 200 ;
+
+BigBreast::BigBreast()
 {
 
 	m_SamplerLoc = GL_NONE;
@@ -33,13 +57,13 @@ BigEyesSample::BigEyesSample()
 	m_FrameIndex = 0;
 }
 
-BigEyesSample::~BigEyesSample()
+BigBreast::~BigBreast()
 {
 	NativeImageUtil::FreeNativeImage(&m_RenderImage);
 
 }
 
-void BigEyesSample::Init()
+void BigBreast::Init()
 {
 	if(m_ProgramObj)
 		return;
@@ -102,7 +126,7 @@ void BigEyesSample::Init()
 	}
 	else
 	{
-		LOGCATE("BigEyesSample::Init create program fail");
+		LOGCATE("BigBreast::Init create program fail");
 	}
 
 	GLfloat verticesCoords[] = {
@@ -152,9 +176,9 @@ void BigEyesSample::Init()
 
 }
 
-void BigEyesSample::LoadImage(NativeImage *pImage)
+void BigBreast::LoadImage(NativeImage *pImage)
 {
-	LOGCATE("BigEyesSample::LoadImage pImage = %p", pImage->ppPlane[0]);
+	LOGCATE("BigBreast::LoadImage pImage = %p", pImage->ppPlane[0]);
 	if (pImage)
 	{
 	    ScopedSyncLock lock(&m_Lock);
@@ -166,9 +190,9 @@ void BigEyesSample::LoadImage(NativeImage *pImage)
 
 }
 
-void BigEyesSample::Draw(int screenW, int screenH)
+void BigBreast::Draw(int screenW, int screenH)
 {
-	LOGCATE("BigEyesSample::Draw() [w,h]=[%d,%d]", screenW, screenH);
+	LOGCATE("BigBreast::Draw() [w,h]=[%d,%d]", screenW, screenH);
 
 	if(m_ProgramObj == GL_NONE) return;
 
@@ -210,17 +234,16 @@ void BigEyesSample::Draw(int screenW, int screenH)
     offset = (m_FrameIndex / 100) % 2 == 1 ? (1 - offset) : offset;
 
 	GLUtils::setFloat(m_ProgramObj, "u_ScaleRatio", offset * 1.6f);
-	GLUtils::setFloat(m_ProgramObj, "u_Radius", EyeRadius);
-	GLUtils::setVec2(m_ProgramObj, "u_LeftEyeCenterPos", LeftEyePoint[0], LeftEyePoint[1]);
-    GLUtils::setVec2(m_ProgramObj, "u_RightEyeCenterPos", RightEyePoint[0], RightEyePoint[1]);
+	GLUtils::setFloat(m_ProgramObj, "u_Radius", breastSize);
+	GLUtils::setVec2(m_ProgramObj, "u_LeftEyeCenterPos", brestLeftPoint[0], brestLeftPoint[1]);
+    GLUtils::setVec2(m_ProgramObj, "u_RightEyeCenterPos", rightBreastPoint[0], rightBreastPoint[1]);
     GLUtils::setVec2(m_ProgramObj, "u_ImgSize", m_RenderImage.width, m_RenderImage.height);
-
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, (const void *)0);
 
 }
 
-void BigEyesSample::Destroy()
+void BigBreast::Destroy()
 {
 	if (m_ProgramObj)
 	{
@@ -237,9 +260,9 @@ void BigEyesSample::Destroy()
  * @param angleY 绕Y轴旋转度数
  * @param ratio 宽高比
  * */
-void BigEyesSample::UpdateMVPMatrix(glm::mat4 &mvpMatrix, int angleX, int angleY, float ratio)
+void BigBreast::UpdateMVPMatrix(glm::mat4 &mvpMatrix, int angleX, int angleY, float ratio)
 {
-	LOGCATE("BigEyesSample::UpdateMVPMatrix angleX = %d, angleY = %d, ratio = %f", angleX, angleY, ratio);
+	LOGCATE("BigBreast::UpdateMVPMatrix angleX = %d, angleY = %d, ratio = %f", angleX, angleY, ratio);
 	angleX = angleX % 360;
 	angleY = angleY % 360;
 
@@ -271,7 +294,7 @@ void BigEyesSample::UpdateMVPMatrix(glm::mat4 &mvpMatrix, int angleX, int angleY
 
 }
 
-void BigEyesSample::UpdateTransformMatrix(float rotateX, float rotateY, float scaleX, float scaleY)
+void BigBreast::UpdateTransformMatrix(float rotateX, float rotateY, float scaleX, float scaleY)
 {
 	GLSampleBase::UpdateTransformMatrix(rotateX, rotateY, scaleX, scaleY);
 	m_AngleX = static_cast<int>(rotateX);

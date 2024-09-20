@@ -64,6 +64,7 @@ import static com.byteflow.app.MyNativeRender.SAMPLE_TYPE_INSTANCING;
 import static com.byteflow.app.MyNativeRender.SAMPLE_TYPE_KEY_AVATAR;
 import static com.byteflow.app.MyNativeRender.SAMPLE_TYPE_KEY_BEATING_HEART;
 import static com.byteflow.app.MyNativeRender.SAMPLE_TYPE_KEY_BEZIER_CURVE;
+import static com.byteflow.app.MyNativeRender.SAMPLE_TYPE_KEY_BIG_BREAST;
 import static com.byteflow.app.MyNativeRender.SAMPLE_TYPE_KEY_BIG_EYES;
 import static com.byteflow.app.MyNativeRender.SAMPLE_TYPE_KEY_BIG_HEAD;
 import static com.byteflow.app.MyNativeRender.SAMPLE_TYPE_KEY_BINARY_PROGRAM;
@@ -82,6 +83,7 @@ import static com.byteflow.app.MyNativeRender.SAMPLE_TYPE_KEY_RGB2YUYV;
 import static com.byteflow.app.MyNativeRender.SAMPLE_TYPE_KEY_ROTARY_HEAD;
 import static com.byteflow.app.MyNativeRender.SAMPLE_TYPE_KEY_SCRATCH_CARD;
 import static com.byteflow.app.MyNativeRender.SAMPLE_TYPE_KEY_SHOCK_WAVE;
+import static com.byteflow.app.MyNativeRender.SAMPLE_TYPE_KEY_SHRINK_KOSHI;
 import static com.byteflow.app.MyNativeRender.SAMPLE_TYPE_KEY_STAY_COLOR;
 import static com.byteflow.app.MyNativeRender.SAMPLE_TYPE_KEY_TBO;
 import static com.byteflow.app.MyNativeRender.SAMPLE_TYPE_KEY_TEXT_RENDER;
@@ -159,7 +161,9 @@ public class MainActivity extends AppCompatActivity implements AudioCollector.Ca
             "RGB to I444",
             "Copy Texture",
             "Blit Frame Buffer",
-            "Binary Program"
+            "Binary Program",
+            "KOSHI SHRINK" ,
+            "big breast "
     };
 
     private MyGLSurfaceView mGLSurfaceView;
@@ -394,11 +398,27 @@ public class MainActivity extends AppCompatActivity implements AudioCollector.Ca
                         loadRGBAImage(R.drawable.noise);
                         mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
                         break;
-                    case SAMPLE_TYPE_KEY_BIG_EYES:
-                    case SAMPLE_TYPE_KEY_FACE_SLENDER:
-                        Bitmap bitmap = loadRGBAImage(R.drawable.test);
-                        mGLSurfaceView.setAspectRatio(bitmap.getWidth(), bitmap.getHeight());
+                    case  SAMPLE_TYPE_KEY_SHRINK_KOSHI:
+                        Bitmap bitmap1= loadRGBAImage(R.drawable.test);
+                        mGLSurfaceView.setAspectRatio(bitmap1.getWidth(), bitmap1.getHeight());
                         mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
+                        break ;
+                    case  SAMPLE_TYPE_KEY_BIG_BREAST:
+                        Bitmap bitmap3= loadRGBAImage(R.drawable.test);
+                        mGLSurfaceView.setAspectRatio(bitmap3.getWidth(), bitmap3.getHeight());
+                        mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
+                        Log.w("SAMPLE_TYPE_KEY_BIG_BREAST" ,"BIG BREAST " ) ;
+                        break ;
+                    case SAMPLE_TYPE_KEY_BIG_EYES:
+                        Bitmap bitmap = loadRGBAImage(R.drawable.yifei);
+                        mGLSurfaceView.setAspectRatio(bitmap.getWidth(), bitmap.getHeight());
+                        mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY); break ;
+
+                    case SAMPLE_TYPE_KEY_FACE_SLENDER:
+                        Bitmap bitmap2 = loadRGBAImage(R.drawable.test);
+                        mGLSurfaceView.setAspectRatio(bitmap2.getWidth(), bitmap2.getHeight());
+                        mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
+                        Log.w("SAMPLE_TYPE_KEY_FACE_SLENDER" ,"FACE SLENDER " ) ;
                         break;
                     case SAMPLE_TYPE_KEY_BIG_HEAD:
                     case SAMPLE_TYPE_KEY_ROTARY_HEAD:
